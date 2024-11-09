@@ -32,4 +32,7 @@ public class SysUser {
     private LocalDateTime createTime;
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+    //不属于⽤户表的字段，需要排除
+    @TableField(exist = false)
+    private String roleId;
 }
