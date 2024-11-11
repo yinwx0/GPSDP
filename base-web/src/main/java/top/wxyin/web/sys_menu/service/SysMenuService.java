@@ -7,4 +7,10 @@ import java.util.List;
 
 public interface SysMenuService extends IService<SysMenu> {
     List<SysMenu> getParent();
+
+    //根据⽤户id查询菜单
+    List<SysMenu> getMenuByUserId(Long userId);
+    //根据⻆⾊id查询菜单
+    List<SysMenu> getMenuByRoleId(Long roleId);
+
 }
