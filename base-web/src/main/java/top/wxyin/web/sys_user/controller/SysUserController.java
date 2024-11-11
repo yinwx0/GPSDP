@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.web.bind.annotation.*;
+import top.wxyin.jwt.JwtUtils;
 import top.wxyin.result.ResultVo;
 import top.wxyin.utils.ResultUtils;
 import top.wxyin.web.sys_menu.entity.AssignTreeParm;
@@ -26,9 +27,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @RequestMapping("/api/sysUser")
@@ -41,6 +40,8 @@ public class SysUserController {
     private final SysUserRoleService sysUserRoleService;
 
     private final DefaultKaptcha defaultKaptcha;
+
+    private final JwtUtils jwtUtils;
 
     //新增
     @PostMapping
@@ -180,7 +181,12 @@ public class SysUserController {
         LoginVo vo = new LoginVo();
         vo.setUserId(one.getUserId());
         vo.setNickName(one.getNickName());
-        return ResultUtils.success(" 登录成功 ", vo);
+        //⽣成token
+        Map<String,String> map = new HashMap<>();
+        map.put("userId",Long.toString(one.getUserId()));
+        String token = jwtUtils.generateToken(map);
+        vo.setToken(token);
+        return ResultUtils.success(" 登录成功 ",vo);
     }
 
     //查询菜单树
@@ -208,6 +214,8 @@ public class SysUserController {
         }
         return ResultUtils.error(" 密码修改失败 !");
     }
+
+
 }
 
 

@@ -46,3 +46,13 @@ knife4j:
     enable: true
     username: admin
     password: 123456
+
+
+#jwt配置
+jwt:
+  #颁发者
+  issuer: wxyin
+  #秘钥
+  secret: top.wxyin
+  #60分钟过期
+  expiration: 60
